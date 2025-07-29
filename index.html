@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kantinen-Rechner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            min-height: 100vh;
+            padding: 20px;
+            color: #334155;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 16px;
+            border: 1px solid #e2e8f0;
+        }
+
+        h1 {
+            color: #1e293b;
+            margin-bottom: 24px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        h2 {
+            color: #1e293b;
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .budget-overview {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .budget-item {
+            text-align: center;
+        }
+
+        .budget-label {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+
+        .budget-value {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .budget-remaining { color: #059669; }
+        .budget-used { color: #dc2626; }
+        .budget-total { color: #3b82f6; }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            transition: border-color 0.2s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            font-weight: 400;
+        }
+
+        .button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 8px;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-success {
+            background: #059669;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #047857;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+
+        .results {
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            display: none;
+        }
+
+        .results h3 {
+            color: #1e293b;
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+            font-weight: 600;
+            color: #059669;
+            font-size: 18px;
+            margin-top: 8px;
+            padding-top: 12px;
+            border-top: 2px solid #e2e8f0;
+        }
+
+        .recommendation {
+            margin-top: 16px;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+            background: #fffbeb;
+        }
+
+        .recommendation h4 {
+            color: #92400e;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .recommendation p {
+            color: #78350f;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .recommendation .decision {
+            font-weight: 600;
+            color: #92400e;
+            background: #fef3c7;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-top: 12px;
+        }
+
+        .budget-warning {
+            background: #fef2f2;
+            border-left: 4px solid #dc2626;
+            color: #b91c1c;
+        }
+
+        .budget-warning .decision {
+            background: #fecaca;
+            color: #b91c1c;
+        }
+
+        .price {
+            font-weight: 600;
+            color: #059669;
+        }
+
+        .action-buttons {
+            display: none;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .history {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        .history-item:last-child {
+            border-bottom: none;
+        }
+
+        .history-date {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .history-amount {
+            font-weight: 600;
+            color: #dc2626;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tab {
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #64748b;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Kantinen-Rechner</h1>
+            
+            <div class="budget-overview">
+                <div class="budget-item">
+                    <div class="budget-label">Verbraucht</div>
+                    <div id="verbraucht" class="budget-value budget-used">0,00 €</div>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-label">Verfügbar</div>
+                    <div id="verfuegbar" class="budget-value budget-remaining">100,00 €</div>
+                </div>
+                <div class="budget-item">
+                    <div class="budget-label">Budget</div>
+                    <div id="budget-total" class="budget-value budget-total">100,00 €</div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="budget">Monatsbudget (€)</label>
+                <input type="number" id="budget" step="0.01" min="0" value="100.00">
+            </div>
+            
+            <div class="input-group">
+                <label for="hauptgericht">Preis Hauptgericht (€)</label>
+                <input type="number" id="hauptgericht" step="0.01" min="0" placeholder="z.B. 5.50">
+            </div>
+
+            <div class="checkbox-group">
+                <input type="checkbox" id="dessert">
+                <label for="dessert">Dessert hinzufügen (+1,10 €)</label>
+            </div>
+
+            <button class="button btn-primary" onclick="berechnen()">
+                Berechnen
+            </button>
+
+            <div id="ergebnisse" class="results">
+                <h3>Berechnung</h3>
+                <div id="berechnungsdetails"></div>
+                <div id="empfehlung" class="recommendation">
+                    <h4>Empfehlung</h4>
+                    <div id="empfehlungstext"></div>
+                </div>
+                <div id="action-buttons" class="action-buttons">
+                    <button class="button btn-success" onclick="hinzufuegen()">
+                        Ausgabe hinzufügen
+                    </button>
+                    <button class="button btn-secondary" onclick="verwerfen()">
+                        Verwerfen
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('verlauf')">Verlauf</button>
+                <button class="tab" onclick="switchTab('einstellungen')">Einstellungen</button>
+            </div>
+
+            <div id="verlauf" class="tab-content active">
+                <h2>Monatsübersicht</h2>
+                <div id="history" class="history">
+                    <div style="text-align: center; color: #64748b; padding: 20px;">
+                        Noch keine Ausgaben diesen Monat
+                    </div>
+                </div>
+            </div>
+
+            <div id="einstellungen" class="tab-content">
+                <h2>Einstellungen</h2>
+                <button class="button btn-secondary" onclick="resetMonth()">
+                    Monat zurücksetzen
+                </button>
+                <button class="button btn-secondary" onclick="clearHistory()">
+                    Verlauf löschen
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DESSERT_PREIS = 1.10;
+        const MAX_RABATT = 2.35;
+        const RABATT_PROZENT = 0.5;
+
+        let aktuelleBerechnung = null;
+
+        // Daten laden beim Start
+        window.onload = function() {
+            loadData();
+            updateBudgetDisplay();
+            updateHistory();
+        }
+
+        function loadData() {
+            const data = JSON.parse(localStorage.getItem('kantinenData')) || {
+                budget: 100.00,
+                verbraucht: 0.00,
+                aktuellerMonat: new Date().getMonth(),
+                verlauf: []
+            };
+
+            // Prüfen ob neuer Monat
+            const aktuellerMonat = new Date().getMonth();
+            if (data.aktuellerMonat !== aktuellerMonat) {
+                data.verbraucht = 0.00;
+                data.aktuellerMonat = aktuellerMonat;
+                data.verlauf = [];
+                saveData(data);
+            }
+
+            document.getElementById('budget').value = data.budget;
+            return data;
+        }
+
+        function saveData(data) {
+            localStorage.setItem('kantinenData', JSON.stringify(data));
+        }
+
+        function updateBudgetDisplay() {
+            const data = loadData();
+            const verfuegbar = data.budget - data.verbraucht;
+            
+            document.getElementById('verbraucht').textContent = data.verbraucht.toFixed(2) + ' €';
+            document.getElementById('verfuegbar').textContent = verfuegbar.toFixed(2) + ' €';
+            document.getElementById('budget-total').textContent = data.budget.toFixed(2) + ' €';
+            
+            // Warnung bei niedrigem Budget
+            const verfuegbarElement = document.getElementById('verfuegbar');
+            if (verfuegbar < 10) {
+                verfuegbarElement.style.color = '#dc2626';
+            } else {
+                verfuegbarElement.style.color = '#059669';
+            }
+        }
+
+        function updateHistory() {
+            const data = loadData();
+            const historyDiv = document.getElementById('history');
+            
+            if (data.verlauf.length === 0) {
+                historyDiv.innerHTML = '<div style="text-align: center; color: #64748b; padding: 20px;">Noch keine Ausgaben diesen Monat</div>';
+                return;
+            }
+
+            let html = '';
+            data.verlauf.reverse().forEach(item => {
+                const datum = new Date(item.datum).toLocaleDateString('de-DE', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                html += `
+                    <div class="history-item">
+                        <div>
+                            <div>${item.beschreibung}</div>
+                            <div class="history-date">${datum}</div>
+                        </div>
+                        <div class="history-amount">${item.betrag.toFixed(2)} €</div>
+                    </div>
+                `;
+            });
+            
+            historyDiv.innerHTML = html;
+        }
+
+        function berechnen() {
+            const budgetInput = document.getElementById('budget');
+            const hauptgerichtInput = document.getElementById('hauptgericht');
+            const dessertCheckbox = document.getElementById('dessert');
+            
+            const budget = parseFloat(budgetInput.value);
+            const hauptgerichtPreis = parseFloat(hauptgerichtInput.value);
+            
+            if (isNaN(budget) || budget <= 0) {
+                alert('Bitte geben Sie ein gültiges Budget ein.');
+                return;
+            }
+            
+            if (isNaN(hauptgerichtPreis) || hauptgerichtPreis <= 0) {
+                alert('Bitte geben Sie einen gültigen Preis ein.');
+                return;
+            }
+
+            // Budget aktualisieren
+            const data = loadData();
+            data.budget = budget;
+            saveData(data);
+            updateBudgetDisplay();
+
+            const mitDessert = dessertCheckbox.checked;
+            
+            // Rabatt berechnen
+            const theoretischerRabatt = hauptgerichtPreis * RABATT_PROZENT;
+            const tatsaechlicherRabatt = Math.min(theoretischerRabatt, MAX_RABATT);
+            
+            // Gesamtpreis berechnen
+            const hauptgerichtNachRabatt = hauptgerichtPreis - tatsaechlicherRabatt;
+            const dessertKosten = mitDessert ? DESSERT_PREIS : 0;
+            const gesamtpreis = hauptgerichtNachRabatt + dessertKosten;
+            
+            // Aktuelle Berechnung speichern
+            aktuelleBerechnung = {
+                hauptgerichtPreis,
+                tatsaechlicherRabatt,
+                dessertKosten,
+                gesamtpreis,
+                mitDessert
+            };
+            
+            // Ergebnisse anzeigen
+            zeigeErgebnisse(hauptgerichtPreis, tatsaechlicherRabatt, dessertKosten, gesamtpreis);
+            
+            // Empfehlung generieren
+            generiereEmpfehlung(hauptgerichtPreis, mitDessert, tatsaechlicherRabatt, gesamtpreis);
+            
+            // Action Buttons anzeigen
+            document.getElementById('action-buttons').style.display = 'flex';
+        }
+
+        function zeigeErgebnisse(hauptgerichtPreis, rabatt, dessertKosten, gesamtpreis) {
+            const detailsDiv = document.getElementById('berechnungsdetails');
+            
+            let html = `
+                <div class="result-row">
+                    <span>Hauptgericht</span>
+                    <span class="price">${hauptgerichtPreis.toFixed(2)} €</span>
+                </div>
+                <div class="result-row">
+                    <span>Rabatt (50%, max. 2,35€)</span>
+                    <span class="price">-${rabatt.toFixed(2)} €</span>
+                </div>
+            `;
+            
+            if (dessertKosten > 0) {
+                html += `
+                    <div class="result-row">
+                        <span>Dessert</span>
+                        <span class="price">${dessertKosten.toFixed(2)} €</span>
+                    </div>
+                `;
+            }
+            
+            html += `
+                <div class="result-row">
+                    <span>Gesamt</span>
+                    <span class="price">${gesamtpreis.toFixed(2)} €</span>
+                </div>
+            `;
+            
+            detailsDiv.innerHTML = html;
+            document.getElementById('ergebnisse').style.display = 'block';
+        }
+
+        function generiereEmpfehlung(hauptgerichtPreis, mitDessert, tatsaechlicherRabatt, gesamtpreis) {
+            const empfehlungDiv = document.getElementById('empfehlung');
+            const empfehlungsText = document.getElementById('empfehlungstext');
+            
+            const data = loadData();
+            const verfuegbar = data.budget - data.verbraucht;
+            const nachAusgabe = verfuegbar - gesamtpreis;
+            
+            const maxRabattErreicht = tatsaechlicherRabatt >= MAX_RABATT;
+            
+            let empfehlung = '';
+            let entscheidung = '';
+            let warnung = false;
+            
+            // Budget-Warnung prüfen
+            if (gesamtpreis > verfuegbar) {
+                warnung = true;
+                empfehlung = `⚠️ BUDGET ÜBERSCHRITTEN! Sie haben nur noch ${verfuegbar.toFixed(2)}€ verfügbar.`;
+                entscheidung = `❌ NICHT KAUFEN! Budget reicht nicht aus.`;
+            } else if (nachAusgabe < 5) {
+                warnung = true;
+                empfehlung = `⚠️ BUDGET KNAPP! Nach dieser Ausgabe bleiben nur noch ${nachAusgabe.toFixed(2)}€ übrig.`;
+                entscheidung = `⚠️ VORSICHT! Wenig Budget übrig für den Rest des Monats.`;
+            } else {
+                // Normale Dessert-Empfehlung
+                if (maxRabattErreicht) {
+                    empfehlung = `Sie nutzen den maximalen Rabatt von 2,35€ voll aus. Das Dessert kostet nur die vollen 1,10€ extra.`;
+                    
+                    if (mitDessert) {
+                        entscheidung = `✅ PERFEKT SO! Behalten Sie das Dessert - optimales Preis-Leistungs-Verhältnis.`;
+                    } else {
+                        entscheidung = `🍰 DESSERT DAZUNEHMEN! Bei diesem Hauptgerichtspreis lohnt sich das Dessert am meisten.`;
+                    }
+                } else if (hauptgerichtPreis < 2.20) {
+                    empfehlung = `Bei sehr günstigen Hauptgerichten ist das Dessert proportional teuer.`;
+                    
+                    if (mitDessert) {
+                        entscheidung = `❌ DESSERT WEGLASSEN! Sie zahlen ${gesamtpreis.toFixed(2)}€ statt nur ${(gesamtpreis - DESSERT_PREIS).toFixed(2)}€ - das Dessert verdoppelt fast den Preis.`;
+                    } else {
+                        entscheidung = `✅ RICHTIG SO! Ohne Dessert zahlen Sie nur ${gesamtpreis.toFixed(2)}€. Das Dessert wäre zu teuer.`;
+                    }
+                } else {
+                    empfehlung = `Bei diesem Preis erhalten Sie ${tatsaechlicherRabatt.toFixed(2)}€ Rabatt. Das Dessert kostet die vollen 1,10€ extra.`;
+                    
+                    if (mitDessert) {
+                        entscheidung = `👍 KANN MAN MACHEN. Mit Dessert ${gesamtpreis.toFixed(2)}€, ohne ${(gesamtpreis - DESSERT_PREIS).toFixed(2)}€ - Ihre Entscheidung.`;
+                    } else {
+                        entscheidung = `👍 KANN MAN MACHEN. Das Dessert würde 1,10€ extra kosten (gesamt ${(gesamtpreis + DESSERT_PREIS).toFixed(2)}€) - wenn Sie Lust drauf haben.`;
+                    }
+                }
+            }
+            
+            // Style je nach Warnung
+            if (warnung) {
+                empfehlungDiv.className = 'recommendation budget-warning';
+            } else {
+                empfehlungDiv.className = 'recommendation';
+            }
+            
+            empfehlungsText.innerHTML = `
+                <p>${empfehlung}</p>
+                <div class="decision">${entscheidung}</div>
+                <p style="margin-top: 8px; font-size: 14px;">Nach dieser Ausgabe: ${nachAusgabe.toFixed(2)}€ übrig</p>
+            `;
+        }
+
+        function hinzufuegen() {
+            if (!aktuelleBerechnung) return;
+            
+            const data = loadData();
+            data.verbraucht += aktuelleBerechnung.gesamtpreis;
+            
+            // Beschreibung generieren
+            let beschreibung = `Hauptgericht (${aktuelleBerechnung.hauptgerichtPreis.toFixed(2)}€)`;
+            if (aktuelleBerechnung.dessertKosten > 0) {
+                beschreibung += ` + Dessert`;
+            }
+            
+            // Zu Verlauf hinzufügen
+            data.verlauf.push({
+                datum: new Date().toISOString(),
+                betrag: aktuelleBerechnung.gesamtpreis,
+                beschreibung: beschreibung
+            });
+            
+            saveData(data);
+            updateBudgetDisplay();
+            updateHistory();
+            
+            // Form zurücksetzen
+            document.getElementById('hauptgericht').value = '';
+            document.getElementById('dessert').checked = false;
+            document.getElementById('ergebnisse').style.display = 'none';
+            aktuelleBerechnung = null;
+            
+            alert('Ausgabe wurde hinzugefügt!');
+        }
+
+        function verwerfen() {
+            document.getElementById('ergebnisse').style.display = 'none';
+            aktuelleBerechnung = null;
+        }
+
+        function switchTab(tabName) {
+            // Alle Tabs deaktivieren
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Aktiven Tab aktivieren
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function resetMonth() {
+            if (confirm('Möchten Sie wirklich den aktuellen Monat zurücksetzen? Alle Ausgaben werden gelöscht.')) {
+                const data = loadData();
+                data.verbraucht = 0.00;
+                data.verlauf = [];
+                saveData(data);
+                updateBudgetDisplay();
+                updateHistory();
+                alert('Monat wurde zurückgesetzt!');
+            }
+        }
+
+        function clearHistory() {
+            if (confirm('Möchten Sie wirklich den gesamten Verlauf löschen?')) {
+                const data = loadData();
+                data.verlauf = [];
+                saveData(data);
+                updateHistory();
+                alert('Verlauf wurde gelöscht!');
+            }
+        }
+
+        // Enter-Taste Support
+        document.getElementById('hauptgericht').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                berechnen();
+            }
+        });
+
+        document.getElementById('budget').addEventListener('change', function() {
+            const data = loadData();
+            data.budget = parseFloat(this.value) || 100;
+            saveData(data);
+            updateBudgetDisplay();
+        });
+    </script>
+</body>
+</html>
