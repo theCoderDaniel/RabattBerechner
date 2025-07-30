@@ -13,68 +13,81 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8fafc;
+            background: #fafafa;
             min-height: 100vh;
-            padding: 20px;
-            color: #334155;
+            padding: 16px;
+            color: #1f2937;
+            line-height: 1.5;
         }
 
         .container {
-            max-width: 480px;
+            max-width: 500px;
             margin: 0 auto;
         }
 
         .card {
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            padding: 24px;
-            margin-bottom: 16px;
-            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 20px 0 20px;
+        }
+
+        .card-body {
+            padding: 20px;
         }
 
         h1 {
-            color: #1e293b;
-            margin-bottom: 24px;
-            font-size: 24px;
+            color: #111827;
+            margin-bottom: 20px;
+            font-size: 22px;
             font-weight: 600;
         }
 
         h2 {
-            color: #1e293b;
+            color: #111827;
             margin-bottom: 16px;
             font-size: 18px;
             font-weight: 600;
         }
 
         .budget-overview {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px;
-            background: #f1f5f9;
-            border-radius: 8px;
-            margin-bottom: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .budget-item {
             text-align: center;
+            padding: 16px 12px;
+            background: #f9fafb;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
         }
 
         .budget-label {
             font-size: 12px;
-            color: #64748b;
+            color: #6b7280;
             margin-bottom: 4px;
+            text-transform: uppercase;
+            font-weight: 500;
+            letter-spacing: 0.5px;
         }
 
         .budget-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
         }
 
         .budget-remaining { color: #059669; }
         .budget-used { color: #dc2626; }
-        .budget-total { color: #3b82f6; }
+        .budget-total { color: #374151; }
 
         .input-group {
             margin-bottom: 16px;
@@ -88,51 +101,54 @@
             font-size: 14px;
         }
 
-        input[type="number"] {
+        input[type="number"], input[type="text"] {
             width: 100%;
             padding: 12px;
             border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 15px;
             background: white;
-            transition: border-color 0.2s;
+            transition: border-color 0.15s ease;
         }
 
-        input[type="number"]:focus {
+        input[type="number"]:focus, input[type="text"]:focus {
             outline: none;
             border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
         }
 
         .checkbox-group {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 20px;
             padding: 12px;
-            background: #f1f5f9;
-            border-radius: 8px;
+            background: #f9fafb;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
         }
 
         input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
         }
 
         .checkbox-group label {
             margin: 0;
             font-weight: 400;
+            font-size: 14px;
         }
 
         .button {
             width: 100%;
-            padding: 12px;
+            padding: 12px 16px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s ease;
             margin-bottom: 8px;
         }
 
@@ -163,18 +179,28 @@
             background: #4b5563;
         }
 
+        .btn-outline {
+            background: white;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-outline:hover {
+            background: #f9fafb;
+        }
+
         .results {
             padding: 20px;
-            background: #f8fafc;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
+            background: #f9fafb;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
             display: none;
         }
 
         .results h3 {
-            color: #1e293b;
+            color: #111827;
             margin-bottom: 16px;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
         }
 
@@ -182,38 +208,39 @@
             display: flex;
             justify-content: space-between;
             padding: 8px 0;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
         }
 
         .result-row:last-child {
             border-bottom: none;
             font-weight: 600;
             color: #059669;
-            font-size: 18px;
+            font-size: 16px;
             margin-top: 8px;
             padding-top: 12px;
-            border-top: 2px solid #e2e8f0;
+            border-top: 1px solid #d1d5db;
         }
 
         .recommendation {
             margin-top: 16px;
             padding: 16px;
-            border-radius: 8px;
-            border-left: 4px solid #f59e0b;
+            border-radius: 6px;
+            border-left: 3px solid #f59e0b;
             background: #fffbeb;
         }
 
         .recommendation h4 {
             color: #92400e;
             margin-bottom: 8px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 600;
         }
 
         .recommendation p {
             color: #78350f;
-            line-height: 1.5;
             margin-bottom: 8px;
+            font-size: 14px;
         }
 
         .recommendation .decision {
@@ -221,14 +248,22 @@
             color: #92400e;
             background: #fef3c7;
             padding: 8px 12px;
-            border-radius: 6px;
+            border-radius: 4px;
             margin-top: 12px;
+            font-size: 14px;
         }
 
         .budget-warning {
             background: #fef2f2;
-            border-left: 4px solid #dc2626;
+            border-left-color: #dc2626;
+        }
+
+        .budget-warning h4 {
             color: #b91c1c;
+        }
+
+        .budget-warning p {
+            color: #991b1b;
         }
 
         .budget-warning .decision {
@@ -247,17 +282,51 @@
             margin-top: 16px;
         }
 
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            border-bottom: 2px solid transparent;
+            transition: all 0.15s ease;
+        }
+
+        .tab.active {
+            color: #3b82f6;
+            border-bottom-color: #3b82f6;
+            background: white;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
         .history {
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
         }
 
         .history-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #e2e8f0;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3f4f6;
             font-size: 14px;
         }
 
@@ -265,100 +334,122 @@
             border-bottom: none;
         }
 
+        .history-details {
+            flex: 1;
+        }
+
         .history-date {
-            color: #64748b;
+            color: #6b7280;
             font-size: 12px;
+            margin-top: 2px;
         }
 
         .history-amount {
             font-weight: 600;
             color: #dc2626;
+            margin-left: 12px;
         }
 
-        .tabs {
+        .month-selector {
             display: flex;
+            align-items: center;
+            gap: 12px;
             margin-bottom: 16px;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
         }
 
-        .tab {
-            padding: 12px 16px;
-            background: none;
-            border: none;
+        .month-nav {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            padding: 6px 10px;
             cursor: pointer;
             font-size: 14px;
-            font-weight: 500;
-            color: #64748b;
-            border-bottom: 2px solid transparent;
+            transition: all 0.15s ease;
         }
 
-        .tab.active {
-            color: #3b82f6;
-            border-bottom-color: #3b82f6;
+        .month-nav:hover {
+            background: #f3f4f6;
         }
 
-        .tab-content {
-            display: none;
+        .month-display {
+            flex: 1;
+            text-align: center;
+            font-weight: 600;
+            color: #111827;
         }
 
-        .tab-content.active {
-            display: block;
+        .empty-state {
+            text-align: center;
+            color: #6b7280;
+            padding: 40px 20px;
+            font-size: 14px;
+        }
+
+
+
+        .divider {
+            height: 1px;
+            background: #e5e7eb;
+            margin: 20px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card">
-            <h1>Kantinen-Rechner</h1>
-            
-            <div class="budget-overview">
-                <div class="budget-item">
-                    <div class="budget-label">Verbraucht</div>
-                    <div id="verbraucht" class="budget-value budget-used">0,00 €</div>
-                </div>
-                <div class="budget-item">
-                    <div class="budget-label">Verfügbar</div>
-                    <div id="verfuegbar" class="budget-value budget-remaining">100,00 €</div>
-                </div>
-                <div class="budget-item">
-                    <div class="budget-label">Budget</div>
-                    <div id="budget-total" class="budget-value budget-total">100,00 €</div>
+            <div class="card-header">
+                <h1>Kantinen-Rechner</h1>
+                
+                <div class="budget-overview">
+                    <div class="budget-item">
+                        <div class="budget-label">Verbraucht</div>
+                        <div id="verbraucht" class="budget-value budget-used">0,00 €</div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-label">Verfügbar</div>
+                        <div id="verfuegbar" class="budget-value budget-remaining">100,00 €</div>
+                    </div>
+                    <div class="budget-item">
+                        <div class="budget-label">Budget</div>
+                        <div id="budget-total" class="budget-value budget-total">100,00 €</div>
+                    </div>
                 </div>
             </div>
 
-            <div class="input-group">
-                <label for="budget">Monatsbudget (€)</label>
-                <input type="number" id="budget" step="0.01" min="0" value="100.00">
-            </div>
-            
-            <div class="input-group">
-                <label for="hauptgericht">Preis Hauptgericht (€)</label>
-                <input type="number" id="hauptgericht" step="0.01" min="0" placeholder="z.B. 5.50">
-            </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="dessert">
-                <label for="dessert">Dessert hinzufügen (+1,10 €)</label>
-            </div>
-
-            <button class="button btn-primary" onclick="berechnen()">
-                Berechnen
-            </button>
-
-            <div id="ergebnisse" class="results">
-                <h3>Berechnung</h3>
-                <div id="berechnungsdetails"></div>
-                <div id="empfehlung" class="recommendation">
-                    <h4>Empfehlung</h4>
-                    <div id="empfehlungstext"></div>
+            <div class="card-body">
+                <div class="input-group">
+                    <label for="hauptgericht">Preis Hauptgericht (€)</label>
+                    <input type="number" id="hauptgericht" step="0.01" min="0" placeholder="z.B. 5.50">
                 </div>
-                <div id="action-buttons" class="action-buttons">
-                    <button class="button btn-success" onclick="hinzufuegen()">
-                        Ausgabe hinzufügen
-                    </button>
-                    <button class="button btn-secondary" onclick="verwerfen()">
-                        Verwerfen
-                    </button>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="dessert">
+                    <label for="dessert">Dessert hinzufügen (+1,10 €)</label>
+                </div>
+
+                <button class="button btn-primary" onclick="berechnen()">
+                    Berechnen
+                </button>
+
+                <div id="ergebnisse" class="results">
+                    <h3>Berechnung</h3>
+                    <div id="berechnungsdetails"></div>
+                    <div id="empfehlung" class="recommendation">
+                        <h4>Empfehlung</h4>
+                        <div id="empfehlungstext"></div>
+                    </div>
+                    <div id="action-buttons" class="action-buttons">
+                        <button class="button btn-success" onclick="hinzufuegen()">
+                            Ausgabe hinzufügen
+                        </button>
+                        <button class="button btn-outline" onclick="verwerfen()">
+                            Verwerfen
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -366,25 +457,47 @@
         <div class="card">
             <div class="tabs">
                 <button class="tab active" onclick="switchTab('verlauf')">Verlauf</button>
+                <button class="tab" onclick="switchTab('manuell')">Manuell hinzufügen</button>
                 <button class="tab" onclick="switchTab('einstellungen')">Einstellungen</button>
             </div>
 
             <div id="verlauf" class="tab-content active">
-                <h2>Monatsübersicht</h2>
+                <div class="month-selector">
+                    <button class="month-nav" onclick="changeMonth(-1)">‹</button>
+                    <div class="month-display" id="current-month"></div>
+                    <button class="month-nav" onclick="changeMonth(1)">›</button>
+                </div>
+                
                 <div id="history" class="history">
-                    <div style="text-align: center; color: #64748b; padding: 20px;">
-                        Noch keine Ausgaben diesen Monat
-                    </div>
+                    <div class="empty-state">Keine Ausgaben vorhanden</div>
                 </div>
             </div>
 
-            <div id="einstellungen" class="tab-content">
-                <h2>Einstellungen</h2>
-                <button class="button btn-secondary" onclick="resetMonth()">
-                    Monat zurücksetzen
+            <div id="manuell" class="tab-content">
+                <div class="input-group">
+                    <label for="manueller-betrag">Betrag (€)</label>
+                    <input type="number" id="manueller-betrag" step="0.01" min="0" placeholder="z.B. 3.50">
+                </div>
+                <div class="input-group">
+                    <label for="beschreibung">Beschreibung (optional)</label>
+                    <input type="text" id="beschreibung" placeholder="z.B. Kaffee, Snack, etc.">
+                </div>
+                <button class="button btn-success" onclick="manuellenBetragHinzufuegen()">
+                    Hinzufügen
                 </button>
-                <button class="button btn-secondary" onclick="clearHistory()">
-                    Verlauf löschen
+            </div>
+
+            <div id="einstellungen" class="tab-content">
+                <div class="input-group">
+                    <label for="budget-setting">Monatsbudget (€)</label>
+                    <input type="number" id="budget-setting" step="0.01" min="0" value="100.00">
+                </div>
+                <div class="divider"></div>
+                <button class="button btn-secondary" onclick="resetCurrentMonth()">
+                    Aktuellen Monat zurücksetzen
+                </button>
+                <button class="button btn-secondary" onclick="clearAllHistory()">
+                    Gesamten Verlauf löschen
                 </button>
             </div>
         </div>
@@ -396,46 +509,68 @@
         const RABATT_PROZENT = 0.5;
 
         let aktuelleBerechnung = null;
+        let currentDisplayMonth = new Date();
+
+        const MONATE = [
+            'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+            'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'
+        ];
 
         // Daten laden beim Start
         window.onload = function() {
             loadData();
             updateBudgetDisplay();
             updateHistory();
+            updateMonthDisplay();
+        }
+
+        function getMonthKey(date) {
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
         }
 
         function loadData() {
-            const data = JSON.parse(localStorage.getItem('kantinenData')) || {
-                budget: 100.00,
-                verbraucht: 0.00,
-                aktuellerMonat: new Date().getMonth(),
-                verlauf: []
-            };
-
-            // Prüfen ob neuer Monat
-            const aktuellerMonat = new Date().getMonth();
-            if (data.aktuellerMonat !== aktuellerMonat) {
-                data.verbraucht = 0.00;
-                data.aktuellerMonat = aktuellerMonat;
-                data.verlauf = [];
-                saveData(data);
+            const allData = JSON.parse(localStorage.getItem('kantinenData')) || {};
+            const currentMonthKey = getMonthKey(new Date());
+            
+            if (!allData[currentMonthKey]) {
+                allData[currentMonthKey] = {
+                    budget: 100.00,
+                    verbraucht: 0.00,
+                    verlauf: []
+                };
+                localStorage.setItem('kantinenData', JSON.stringify(allData));
             }
 
-            document.getElementById('budget').value = data.budget;
-            return data;
+            return allData;
         }
 
-        function saveData(data) {
-            localStorage.setItem('kantinenData', JSON.stringify(data));
+        function getCurrentMonthData() {
+            const allData = loadData();
+            const currentMonthKey = getMonthKey(new Date());
+            return allData[currentMonthKey];
+        }
+
+        function getDisplayMonthData() {
+            const allData = loadData();
+            const monthKey = getMonthKey(currentDisplayMonth);
+            return allData[monthKey] || { budget: 100.00, verbraucht: 0.00, verlauf: [] };
+        }
+
+        function saveData(monthData, date = new Date()) {
+            const allData = loadData();
+            const monthKey = getMonthKey(date);
+            allData[monthKey] = monthData;
+            localStorage.setItem('kantinenData', JSON.stringify(allData));
         }
 
         function updateBudgetDisplay() {
-            const data = loadData();
+            const data = getCurrentMonthData();
             const verfuegbar = data.budget - data.verbraucht;
             
             document.getElementById('verbraucht').textContent = data.verbraucht.toFixed(2) + ' €';
             document.getElementById('verfuegbar').textContent = verfuegbar.toFixed(2) + ' €';
             document.getElementById('budget-total').textContent = data.budget.toFixed(2) + ' €';
+            document.getElementById('budget-setting').value = data.budget.toFixed(2);
             
             // Warnung bei niedrigem Budget
             const verfuegbarElement = document.getElementById('verfuegbar');
@@ -446,17 +581,33 @@
             }
         }
 
+        function updateMonthDisplay() {
+            const monthName = MONATE[currentDisplayMonth.getMonth()];
+            const year = currentDisplayMonth.getFullYear();
+            document.getElementById('current-month').textContent = `${monthName} ${year}`;
+        }
+
+        function changeMonth(direction) {
+            const newMonth = new Date(currentDisplayMonth);
+            newMonth.setMonth(newMonth.getMonth() + direction);
+            currentDisplayMonth = newMonth;
+            updateMonthDisplay();
+            updateHistory();
+        }
+
         function updateHistory() {
-            const data = loadData();
+            const data = getDisplayMonthData();
             const historyDiv = document.getElementById('history');
             
             if (data.verlauf.length === 0) {
-                historyDiv.innerHTML = '<div style="text-align: center; color: #64748b; padding: 20px;">Noch keine Ausgaben diesen Monat</div>';
+                historyDiv.innerHTML = '<div class="empty-state">Keine Ausgaben vorhanden</div>';
                 return;
             }
 
             let html = '';
-            data.verlauf.reverse().forEach(item => {
+            const sortedVerlauf = [...data.verlauf].sort((a, b) => new Date(b.datum) - new Date(a.datum));
+            
+            sortedVerlauf.forEach(item => {
                 const datum = new Date(item.datum).toLocaleDateString('de-DE', {
                     day: '2-digit',
                     month: '2-digit',
@@ -466,7 +617,7 @@
                 
                 html += `
                     <div class="history-item">
-                        <div>
+                        <div class="history-details">
                             <div>${item.beschreibung}</div>
                             <div class="history-date">${datum}</div>
                         </div>
@@ -479,28 +630,15 @@
         }
 
         function berechnen() {
-            const budgetInput = document.getElementById('budget');
             const hauptgerichtInput = document.getElementById('hauptgericht');
             const dessertCheckbox = document.getElementById('dessert');
             
-            const budget = parseFloat(budgetInput.value);
             const hauptgerichtPreis = parseFloat(hauptgerichtInput.value);
-            
-            if (isNaN(budget) || budget <= 0) {
-                alert('Bitte geben Sie ein gültiges Budget ein.');
-                return;
-            }
             
             if (isNaN(hauptgerichtPreis) || hauptgerichtPreis <= 0) {
                 alert('Bitte geben Sie einen gültigen Preis ein.');
                 return;
             }
-
-            // Budget aktualisieren
-            const data = loadData();
-            data.budget = budget;
-            saveData(data);
-            updateBudgetDisplay();
 
             const mitDessert = dessertCheckbox.checked;
             
@@ -570,7 +708,7 @@
             const empfehlungDiv = document.getElementById('empfehlung');
             const empfehlungsText = document.getElementById('empfehlungstext');
             
-            const data = loadData();
+            const data = getCurrentMonthData();
             const verfuegbar = data.budget - data.verbraucht;
             const nachAusgabe = verfuegbar - gesamtpreis;
             
@@ -628,14 +766,14 @@
             empfehlungsText.innerHTML = `
                 <p>${empfehlung}</p>
                 <div class="decision">${entscheidung}</div>
-                <p style="margin-top: 8px; font-size: 14px;">Nach dieser Ausgabe: ${nachAusgabe.toFixed(2)}€ übrig</p>
+                <p style="margin-top: 8px; font-size: 13px; color: #6b7280;">Nach dieser Ausgabe: ${nachAusgabe.toFixed(2)}€ übrig</p>
             `;
         }
 
         function hinzufuegen() {
             if (!aktuelleBerechnung) return;
             
-            const data = loadData();
+            const data = getCurrentMonthData();
             data.verbraucht += aktuelleBerechnung.gesamtpreis;
             
             // Beschreibung generieren
@@ -653,7 +791,11 @@
             
             saveData(data);
             updateBudgetDisplay();
-            updateHistory();
+            
+            // Wenn aktueller Monat angezeigt wird, History updaten
+            if (getMonthKey(currentDisplayMonth) === getMonthKey(new Date())) {
+                updateHistory();
+            }
             
             // Form zurücksetzen
             document.getElementById('hauptgericht').value = '';
@@ -662,6 +804,43 @@
             aktuelleBerechnung = null;
             
             alert('Ausgabe wurde hinzugefügt!');
+        }
+
+        function manuellenBetragHinzufuegen() {
+            const betragInput = document.getElementById('manueller-betrag');
+            const beschreibungInput = document.getElementById('beschreibung');
+            
+            const betrag = parseFloat(betragInput.value);
+            
+            if (isNaN(betrag) || betrag <= 0) {
+                alert('Bitte geben Sie einen gültigen Betrag ein.');
+                return;
+            }
+            
+            const data = getCurrentMonthData();
+            data.verbraucht += betrag;
+            
+            const beschreibung = beschreibungInput.value.trim() || 'Manuelle Eingabe';
+            
+            data.verlauf.push({
+                datum: new Date().toISOString(),
+                betrag: betrag,
+                beschreibung: beschreibung
+            });
+            
+            saveData(data);
+            updateBudgetDisplay();
+            
+            // Wenn aktueller Monat angezeigt wird, History updaten
+            if (getMonthKey(currentDisplayMonth) === getMonthKey(new Date())) {
+                updateHistory();
+            }
+            
+            // Inputs zurücksetzen
+            betragInput.value = '';
+            beschreibungInput.value = '';
+            
+            alert('Betrag hinzugefügt!');
         }
 
         function verwerfen() {
@@ -679,27 +858,48 @@
             document.getElementById(tabName).classList.add('active');
         }
 
-        function resetMonth() {
+        function resetCurrentMonth() {
             if (confirm('Möchten Sie wirklich den aktuellen Monat zurücksetzen? Alle Ausgaben werden gelöscht.')) {
-                const data = loadData();
+                const data = getCurrentMonthData();
                 data.verbraucht = 0.00;
                 data.verlauf = [];
                 saveData(data);
                 updateBudgetDisplay();
-                updateHistory();
-                alert('Monat wurde zurückgesetzt!');
+                
+                // Wenn aktueller Monat angezeigt wird, History updaten
+                if (getMonthKey(currentDisplayMonth) === getMonthKey(new Date())) {
+                    updateHistory();
+                }
+                
+                alert('Aktueller Monat wurde zurückgesetzt!');
             }
         }
 
-        function clearHistory() {
-            if (confirm('Möchten Sie wirklich den gesamten Verlauf löschen?')) {
-                const data = loadData();
-                data.verlauf = [];
-                saveData(data);
+        function clearAllHistory() {
+            if (confirm('Möchten Sie wirklich den gesamten Verlauf aller Monate löschen? Diese Aktion kann nicht rückgängig gemacht werden.')) {
+                localStorage.removeItem('kantinenData');
+                
+                // Aktuellen Monat neu initialisieren
+                const currentData = {
+                    budget: parseFloat(document.getElementById('budget-setting').value) || 100.00,
+                    verbraucht: 0.00,
+                    verlauf: []
+                };
+                saveData(currentData);
+                
+                updateBudgetDisplay();
                 updateHistory();
-                alert('Verlauf wurde gelöscht!');
+                alert('Gesamter Verlauf wurde gelöscht!');
             }
         }
+
+        // Budget-Einstellung ändern
+        document.getElementById('budget-setting').addEventListener('change', function() {
+            const data = getCurrentMonthData();
+            data.budget = parseFloat(this.value) || 100;
+            saveData(data);
+            updateBudgetDisplay();
+        });
 
         // Enter-Taste Support
         document.getElementById('hauptgericht').addEventListener('keypress', function(e) {
@@ -708,11 +908,16 @@
             }
         });
 
-        document.getElementById('budget').addEventListener('change', function() {
-            const data = loadData();
-            data.budget = parseFloat(this.value) || 100;
-            saveData(data);
-            updateBudgetDisplay();
+        document.getElementById('manueller-betrag').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                manuellenBetragHinzufuegen();
+            }
+        });
+
+        document.getElementById('beschreibung').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                manuellenBetragHinzufuegen();
+            }
         });
     </script>
 </body>
